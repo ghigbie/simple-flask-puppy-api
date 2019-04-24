@@ -1,5 +1,5 @@
 from flask import Flask
-from falsk_restful import Resource, Api
+from flask_restful import Resource, Api
 
 app = Flask (__name__)
 api = Api(app)
@@ -11,11 +11,11 @@ class PuppyNames(Resource):
     def get(self):
         pass
     
-    def post():
+    def post(self):
         pass
     
-    def delete():
+    def delete(self):
         pass
-        
+
 if __name__ == '__main__':
     app.run(Debug=True)
