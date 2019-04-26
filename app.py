@@ -45,10 +45,10 @@ class PuppyNames(Resource):
         return pup.json()
     
     def delete(self, name):
-        for ind,pup in enumerate(puppies):
-            deleted_pup = puppies.pop(ind)
-            print(deleted_pup, ' was deleted.')
-            return {'note' : 'Puppy was deleted'}
+        pup = Puppy.query.filter_by(name=name).first()
+        db.session.delete(pup)
+        db.session.commit()
+        return {'note' : 'Puppy was deleted'}
 
 class AllNames(Resource):
     @jwt_required()
