@@ -33,15 +33,16 @@ class Puppy(db.Model):
 class PuppyNames(Resource):
 
     def get(self, name):
-        for pup in puppies:
-            if pup.name == name:
-                return pup
+        pup = Puppy.query.filter_by(name=name).first()
+        if pup:
+            return pup.json()
         return {'name' : "None"}, 404
     
     def post(self, name):
-        pup = {'name' : name}
-        puppies.append(pup)
-        return pup
+        pup = Puppy(name=name)
+        db.session.add(pup)
+        db.session.commit(pup)
+        return pup.json()
     
     def delete(self, name):
         for ind,pup in enumerate(puppies):
