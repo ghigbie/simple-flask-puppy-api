@@ -25,5 +25,9 @@ class PuppyNames(Resource):
             print(deleted_pup, ' was deleted.')
             return {'note' : 'Puppy was deleted'}
 
+class AllNames(Resource):
+    def get(self):
+        return {'puppies': puppies}
+        
 if __name__ == '__main__':
     app.run(Debug=True)
