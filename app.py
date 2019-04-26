@@ -51,9 +51,11 @@ class PuppyNames(Resource):
         return {'note' : 'Puppy was deleted'}
 
 class AllNames(Resource):
-    @jwt_required()
+    # @jwt_required()
     def get(self):
-        return {'puppies': puppies}
+        puppies = Puppy.query.all()
+
+        return [pup.json() for pup in puppies]
 
 api.add_resource(PuppyNames, '/puppy/<string:name>')
 api.add_resource(AllNames, '/puppies')
