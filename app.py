@@ -20,7 +20,10 @@ class PuppyNames(Resource):
         return pup
     
     def delete(self, name):
-        pass
+        for ind,pup in enumerate(puppies):
+            deleted_pup = puppies.pop(ind)
+            print(deleted_pup, ' was deleted.')
+            return {'note' : 'Puppy was deleted'}
 
 if __name__ == '__main__':
     app.run(Debug=True)
