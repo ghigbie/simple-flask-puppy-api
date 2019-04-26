@@ -4,7 +4,9 @@ from secure_check import authenticate
 from falsk_jwt import JWT, jwt_required
 
 app = Flask (__name__)
+app.config['SECRET_KEY'] = 'mysecretkey'
 api = Api(app)
+jwt = JWT(app, authenticate, identity)
 
 puppies = []
 
@@ -28,6 +30,7 @@ class PuppyNames(Resource):
             return {'note' : 'Puppy was deleted'}
 
 class AllNames(Resource):
+    @jwt_required()
     def get(self):
         return {'puppies': puppies}
 
