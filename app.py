@@ -8,13 +8,15 @@ puppies = []
 
 class PuppyNames(Resource):
 
-    def get(self):
+    def get(self, name):
         pass
     
-    def post(self):
-        pass
+    def post(self, name):
+        pup = {"name" : name}
+        puppies.append(pup)
+        return pup
     
-    def delete(self):
+    def delete(self, name):
         pass
 
 if __name__ == '__main__':
