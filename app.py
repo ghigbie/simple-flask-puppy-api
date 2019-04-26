@@ -18,8 +18,18 @@ db = SQLAlchemy(app)
 api = Api(app)
 jwt = JWT(app, authenticate, identity)
 
-puppies = []
 
+######################################################################
+class Puppy(db.Model):
+    name = db.Column(db.String(80), primary_key=True)
+
+    def __int__(self, name):
+        self.name = name
+    
+    def json(self):
+        return {'name': self.name}
+
+######################################################################
 class PuppyNames(Resource):
 
     def get(self, name):
