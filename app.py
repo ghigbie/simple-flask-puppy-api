@@ -30,8 +30,8 @@ class AllNames(Resource):
         return {'puppies': puppies}
 
 api.add_resource(PuppyNames, '/puppy/<string:name>')
-api.add_resource(AllNames, '/')
 api.add_resource(AllNames, '/puppies')
-api.add_resource(AllNames, '/allnames')
+
+
 if __name__ == '__main__':
     app.run(Debug=True)
