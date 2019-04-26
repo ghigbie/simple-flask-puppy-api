@@ -9,10 +9,13 @@ puppies = []
 class PuppyNames(Resource):
 
     def get(self, name):
-        pass
+        for pup in puppies:
+            if pup.name == name:
+                return pup
+        return {'name' : "None"}
     
     def post(self, name):
-        pup = {"name" : name}
+        pup = {'name' : name}
         puppies.append(pup)
         return pup
     
