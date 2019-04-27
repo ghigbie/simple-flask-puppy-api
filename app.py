@@ -1,19 +1,20 @@
 import os
-from flask import Flask
-from flask_restful import Resource, Api
-from secure_check import authenticate, identity
-from flask_jwt import JWT, jwt_required
+from flask import Flask,request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Api,Resource
+from secure_check import authenticate,identity
+from flask_jwt import JWT ,jwt_required
 from flask_migrate import Migrate
 
 app = Flask (__name__)
 
 app.config['SECRET_KEY'] = 'mysecretkey'
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
+db = SQLAlchemy(app)
+Migrate(app, db)
 
 api = Api(app)
 jwt = JWT(app, authenticate, identity)
@@ -41,7 +42,7 @@ class PuppyNames(Resource):
     def post(self, name):
         pup = Puppy(name=name)
         db.session.add(pup)
-        db.session.commit(pup)
+        db.session.commit()
         return pup.json()
     
     def delete(self, name):
@@ -54,7 +55,6 @@ class AllNames(Resource):
     # @jwt_required()
     def get(self):
         puppies = Puppy.query.all()
-
         return [pup.json() for pup in puppies]
 
 api.add_resource(PuppyNames, '/puppy/<string:name>')
